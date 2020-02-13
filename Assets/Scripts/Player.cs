@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     private bool canrun=false;
     private bool canJump = false;
+    public bool Died = false;
 
     private CharacterController characterController;
     private Animator animator;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     private HealthSystem healthsystem;
     public InventoryDisplay inventoryDisplay;
 
+    Collider playercollider;
 
     public GameObject popup;
     private void Awake()
@@ -37,12 +39,14 @@ public class Player : MonoBehaviour
         hunger = GetComponent<HungerSystem>();
         healthsystem = GetComponent<HealthSystem>();
     }
-   
+    private void OnMouseOver()
+    {
+    }
     void Start()
     {
         popup.SetActive(false);
     }
-   
+
     private void FixedUpdate()
     {
 
@@ -93,6 +97,13 @@ public class Player : MonoBehaviour
         speed = walkSpeed;
         canrun = false;
         canJump = false;
+        if(healthsystem.Health==0)
+        {
+            speed = 0f;
+            animator.SetTrigger("Die");
+            Died = true;
+        }
+      
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed =runspeed;
@@ -127,9 +138,45 @@ public class Player : MonoBehaviour
         animator.SetFloat("speed", dummyspeed);
         animator.SetBool("Run", canrun);
         animator.SetBool("Jump", canJump);
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(1))
         {
-            animator.SetTrigger("attack");
+            animator.SetTrigger("Kick");
+        }
+        else
+        {
+            animator.ResetTrigger("Kick");
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            animator.SetTrigger("Punch");
+        }
+       else
+        {
+            animator.ResetTrigger("Punch");
+        }
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            int temp = Random.Range(1, 4);
+            {
+                if(temp==1)
+                {
+                    animator.SetTrigger("Taunt1");
+                }
+                else if(temp==2)
+                {
+                    animator.SetTrigger("Taunt2");
+                }
+                else if(temp==3)
+                {
+                    animator.SetTrigger("Taunt3");
+                }
+            }
+        }
+        else
+        {
+            animator.ResetTrigger("Taunt1");
+            animator.ResetTrigger("Taunt2");
+            animator.ResetTrigger("Taunt3");
         }
     }
 }

@@ -5,12 +5,13 @@ using UnityEngine;
 public class CollisionHit : MonoBehaviour
 {
     public string hitobjectname;
+    public float DamagetoGive;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(hitobjectname))
         {
-            other.gameObject.GetComponent<HealthSystem>().Takedamage(50f);
+            other.gameObject.GetComponent<HealthSystem>().Takedamage(DamagetoGive);
         }
     }
 }

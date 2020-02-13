@@ -12,11 +12,14 @@ public class Enemy : MonoBehaviour
     float StopFollowDistance=20f;
     float AttackingDistance = 4f;
 
-    bool isFollow = false;
-    bool ishit = false;
+    [HideInInspector]
+    public bool isFollow = false;
+    [HideInInspector]
+    public bool ishit = false;
 
 
     HealthSystem healthsystem;
+    Player player;
 
     public Image healthbar;
 
@@ -27,10 +30,13 @@ public class Enemy : MonoBehaviour
 
     public Transform Gizmosposition;
 
-    NavMeshAgent navmesh;
-    Animator anim;
 
+    NavMeshAgent navmesh;
+
+    public GameObject EnemyTag;
     public GameObject health;
+
+    Animator anim;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -39,6 +45,7 @@ public class Enemy : MonoBehaviour
         healthsystem = GetComponent<HealthSystem>();
         Enemycollider = GetComponent<Collider>();
         BodyColliderDeath.enabled = false;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
 
@@ -53,13 +60,16 @@ public class Enemy : MonoBehaviour
             navmesh.isStopped=true;
             Enemycollider.enabled = false;
             health.SetActive(false);
+            EnemyTag.SetActive(false);
         }
-       Collider[] collider = Physics.OverlapSphere(Gizmosposition.position,radius,playerlayer);
+        
+        Collider[] collider = Physics.OverlapSphere(Gizmosposition.position,radius,playerlayer);
         var temp = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         foreach (var hit in collider)
         {
             if(hit.gameObject.CompareTag("Player"))
             {
+                anim.SetTrigger("Entry");
                 isFollow = true;
             }
            
@@ -92,8 +102,16 @@ public class Enemy : MonoBehaviour
         if(Vector3.Distance(transform.position,temp.position)>AttackingDistance)
         {
             ishit = false;
+            anim.ResetTrigger("Attack");
         }
-
+        if (player.Died == true)
+        {
+            ishit = false;
+            isFollow = false;
+            navmesh.isStopped = true;
+            anim.SetFloat("Speed", 0f);
+            anim.ResetTrigger("Attack");
+        }
     }
 
     private void OnDrawGizmos()

@@ -8,5 +8,6 @@ public class HealthSystem : MonoBehaviour
     public void Takedamage(float damage)
     {
         Health -= damage;
+        Health = Mathf.Clamp(Health, 0, 100);
     }
 }
