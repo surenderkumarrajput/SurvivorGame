@@ -6,22 +6,29 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     private Vector3 movePos = Vector3.zero;
-    public float speed;
     private Vector3 moveDir = Vector3.zero,moveforward;
+
     private bool canrun=false;
+    private bool canJump = false;
+
     private CharacterController characterController;
     private Animator animator;
-    private bool canJump = false;
+
+    public float speed;
     public float jumpspeed = 20.0f;
     public float rotationSpeed = 30.0f;
     public float walkSpeed = 10.0f;
     public float runspeed = 10f;
-    public Image HealthBar,hungerBar;
     private float dummyspeed;
+
+    public Image HealthBar, hungerBar;
+
     public InventoryObject inventory;
     public HungerSystem hunger;
     private HealthSystem healthsystem;
     public InventoryDisplay inventoryDisplay;
+
+
     public GameObject popup;
     private void Awake()
     {
@@ -50,7 +57,7 @@ public class Player : MonoBehaviour
                  {
                      inventory.AddItem(obj.item, 1);
                      Destroy(obj.gameObject);
-                    inventoryDisplay.popclosefunction(popup);
+                     inventoryDisplay.popclosefunction(popup);
                  }
              }
          else if(!obj)
@@ -82,7 +89,7 @@ public class Player : MonoBehaviour
         hungerBar.fillAmount = hunger.Hunger / 100;
         healthsystem.Health = Mathf.Clamp(healthsystem.Health, 0, 100);
         HealthBar.fillAmount = healthsystem.Health / 100;
-        healthsystem.Health = healthsystem.Player_Hunger(healthsystem.Health);
+        healthsystem.Health = hunger.Player_Hunger(healthsystem.Health);
         speed = walkSpeed;
         canrun = false;
         canJump = false;
@@ -120,5 +127,9 @@ public class Player : MonoBehaviour
         animator.SetFloat("speed", dummyspeed);
         animator.SetBool("Run", canrun);
         animator.SetBool("Jump", canJump);
+        if(Input.GetMouseButtonDown(0))
+        {
+            animator.SetTrigger("attack");
+        }
     }
 }

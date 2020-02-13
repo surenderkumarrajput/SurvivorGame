@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,21 +15,46 @@ public class Enemy : MonoBehaviour
     bool isFollow = false;
     bool ishit = false;
 
+
+    HealthSystem healthsystem;
+
+    public Image healthbar;
+
     public LayerMask playerlayer;
+
+    Collider Enemycollider;
+    public Collider BodyColliderDeath;
+
+    public Transform Gizmosposition;
 
     NavMeshAgent navmesh;
     Animator anim;
+
+    public GameObject health;
     void Start()
     {
         anim = GetComponent<Animator>();
         navmesh = GetComponent<NavMeshAgent>();
+        navmesh.stoppingDistance = 4.2f;
+        healthsystem = GetComponent<HealthSystem>();
+        Enemycollider = GetComponent<Collider>();
+        BodyColliderDeath.enabled = false;
     }
 
 
     void Update()
     {
-       Collider[] collider = Physics.OverlapSphere(transform.position,radius,playerlayer);
-       Collider[] attackhit = Physics.OverlapSphere(transform.position, AttackRadius, playerlayer);
+        healthbar.fillAmount = healthsystem.Health / 100;
+        if (healthsystem.Health == 0)
+        {
+            anim.SetTrigger("Dead");
+            BodyColliderDeath.enabled = true;
+            ishit = false;
+            navmesh.isStopped=true;
+            Enemycollider.enabled = false;
+            health.SetActive(false);
+        }
+       Collider[] collider = Physics.OverlapSphere(Gizmosposition.position,radius,playerlayer);
         var temp = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         foreach (var hit in collider)
         {
@@ -36,6 +62,7 @@ public class Enemy : MonoBehaviour
             {
                 isFollow = true;
             }
+           
         }
 
         if (isFollow)
@@ -50,7 +77,7 @@ public class Enemy : MonoBehaviour
             navmesh.ResetPath();
         }
 
-
+        Collider[] attackhit = Physics.OverlapSphere(Gizmosposition.position, AttackRadius, playerlayer);
         foreach (var hit in attackhit)
         {
             if (hit.gameObject.CompareTag("Player"))
@@ -67,11 +94,11 @@ public class Enemy : MonoBehaviour
             ishit = false;
         }
 
-
     }
+
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position,radius);
-        Gizmos.DrawWireSphere(transform.position, AttackRadius);
+        Gizmos.DrawWireSphere(Gizmosposition.position,radius);
+        Gizmos.DrawWireSphere(Gizmosposition.position, AttackRadius);
     }
 }

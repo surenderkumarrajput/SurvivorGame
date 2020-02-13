@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Food
   - Destination
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - 
   - Player
   - Food
-  - 
-  - 
+  - PlayerTag
+  - EnemyTag
   - 
   - 
   - 
