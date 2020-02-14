@@ -101,82 +101,87 @@ public class Player : MonoBehaviour
         {
             speed = 0f;
             animator.SetTrigger("Die");
+            transform.rotation = Quaternion.identity;
             Died = true;
         }
       
-        if (Input.GetKey(KeyCode.LeftShift))
+        if(Died==false)
         {
-            speed =runspeed;
-            canrun = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            canrun = false;
-        }
-        if (characterController.isGrounded)
-        {
-            moveDir = new Vector3(0, 0, Input.GetAxis("Vertical"));
-            moveDir = transform.TransformDirection(moveDir);
-            moveDir *= speed;
+            transform.Rotate(new Vector3(0, Input.GetAxisRaw("Mouse X") * rotationSpeed * Time.deltaTime, 0));
+            moveDir.y -= 9.8f * Time.deltaTime;  //to make it drop
+            characterController.Move(moveDir * speed * Time.deltaTime);
+            var magnitude = new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
+            dummyspeed = magnitude;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = runspeed;
+                canrun = true;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                canrun = false;
+            }
+            if (characterController.isGrounded)
+            {
+                moveDir = new Vector3(0, 0, Input.GetAxis("Vertical"));
+                moveDir = transform.TransformDirection(moveDir);
+                moveDir *= speed;
 
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                canJump = true;
-                moveDir.y = jumpspeed;
-            }
-        }
-        transform.Rotate(new Vector3(0, Input.GetAxisRaw("Mouse X") * rotationSpeed * Time.deltaTime, 0));
-        moveDir.y -= 9.8f *Time.deltaTime;  //to make it drop
-        characterController.Move(moveDir * speed * Time.deltaTime);
-        var magnitude = new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
-        dummyspeed = magnitude;
-        if (!canrun)
-        {
-            if(dummyspeed>0.5f)
-            dummyspeed = 0.5f;
-        }
-        animator.SetFloat("speed", dummyspeed);
-        animator.SetBool("Run", canrun);
-        animator.SetBool("Jump", canJump);
-        if(Input.GetMouseButtonDown(1))
-        {
-            animator.SetTrigger("Kick");
-        }
-        else
-        {
-            animator.ResetTrigger("Kick");
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            animator.SetTrigger("Punch");
-        }
-       else
-        {
-            animator.ResetTrigger("Punch");
-        }
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            int temp = Random.Range(1, 4);
-            {
-                if(temp==1)
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    animator.SetTrigger("Taunt1");
-                }
-                else if(temp==2)
-                {
-                    animator.SetTrigger("Taunt2");
-                }
-                else if(temp==3)
-                {
-                    animator.SetTrigger("Taunt3");
+                    canJump = true;
+                    moveDir.y = jumpspeed;
                 }
             }
+            if (!canrun)
+            {
+                if (dummyspeed > 0.5f)
+                    dummyspeed = 0.5f;
+            }
+            animator.SetFloat("speed", dummyspeed);
+            animator.SetBool("Run", canrun);
+            animator.SetBool("Jump", canJump);
+            if (Input.GetMouseButtonDown(1))
+            {
+                animator.SetTrigger("Kick");
+            }
+            else
+            {
+                animator.ResetTrigger("Kick");
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                animator.SetTrigger("Punch");
+            }
+            else
+            {
+                animator.ResetTrigger("Punch");
+            }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                int temp = Random.Range(1, 4);
+                {
+                    if (temp == 1)
+                    {
+                        animator.SetTrigger("Taunt1");
+                    }
+                    else if (temp == 2)
+                    {
+                        animator.SetTrigger("Taunt2");
+                    }
+                    else if (temp == 3)
+                    {
+                        animator.SetTrigger("Taunt3");
+                    }
+                }
+            }
+            else
+            {
+                animator.ResetTrigger("Taunt1");
+                animator.ResetTrigger("Taunt2");
+                animator.ResetTrigger("Taunt3");
+            }
         }
-        else
-        {
-            animator.ResetTrigger("Taunt1");
-            animator.ResetTrigger("Taunt2");
-            animator.ResetTrigger("Taunt3");
-        }
+       
     }
 }

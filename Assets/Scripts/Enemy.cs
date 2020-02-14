@@ -30,11 +30,11 @@ public class Enemy : MonoBehaviour
 
     public Transform Gizmosposition;
 
-
     NavMeshAgent navmesh;
 
     public GameObject EnemyTag;
     public GameObject health;
+    public GameObject BloodSplash;
 
     Animator anim;
     void Start()
@@ -72,7 +72,6 @@ public class Enemy : MonoBehaviour
                 anim.SetTrigger("Entry");
                 isFollow = true;
             }
-           
         }
 
         if (isFollow)
