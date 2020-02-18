@@ -35,14 +35,15 @@ public class Enemy : MonoBehaviour
 
     public GameObject EnemyTag;
     public GameObject health;
-    public GameObject BloodSplash;
+    public GameObject effect;
+
+    public Transform hips;
 
     Animator anim;
     void Start()
     {
         anim = GetComponent<Animator>();
         navmesh = GetComponent<NavMeshAgent>();
-        navmesh.stoppingDistance = 4.2f;
         healthsystem = GetComponent<HealthSystem>();
         Enemycollider = GetComponent<Collider>();
         BodyColliderDeath.enabled = false;
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         healthbar.fillAmount = healthsystem.Health / 100;
-        if (healthsystem.Health == 0)
+        if (healthsystem.Health <= 0)
         {
             anim.SetTrigger("Dead");
             BodyColliderDeath.enabled = true;
@@ -62,8 +63,12 @@ public class Enemy : MonoBehaviour
             Enemycollider.enabled = false;
             health.SetActive(false);
             EnemyTag.SetActive(false);
+            GameObject instance= Instantiate(effect, hips.position,Quaternion.identity);
+            Destroy(instance, 2f);
+            FindObjectOfType<AudioManager>().play("Die");
+            Destroy(gameObject, 2f);
         }
-        
+
         Collider[] collider = Physics.OverlapSphere(Gizmosposition.position,radius,playerlayer);
         var temp = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         foreach (var hit in collider)

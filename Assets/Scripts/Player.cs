@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     Collider playercollider;
 
     public GameObject popup;
+    public GameObject effects;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -40,18 +42,12 @@ public class Player : MonoBehaviour
         hunger = GetComponent<HungerSystem>();
         healthsystem = GetComponent<HealthSystem>();
     }
-    private void OnMouseOver()
-    {
-    }
+  
     void Start()
     {
         popup.SetActive(false);
     }
 
-    private void FixedUpdate()
-    {
-
-    }
     private void OnControllerColliderHit(ControllerColliderHit hit)
      {
          var obj = hit.gameObject.GetComponent<Item>();
@@ -62,7 +58,6 @@ public class Player : MonoBehaviour
                  {
                      inventory.AddItem(obj.item, 1);
                      Destroy(obj.gameObject);
-                     inventoryDisplay.popclosefunction(popup);
                  }
              }
          else if(!obj)
@@ -100,7 +95,6 @@ public class Player : MonoBehaviour
         canJump = false;
         if(healthsystem.Health==0)
         {
-           
             StartCoroutine(DeathScenechange());
         }
       
