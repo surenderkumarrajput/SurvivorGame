@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Survivor.unity
     guid: 4badc44b23c10411ca9abcb0fde982c7
   - enabled: 1
-    path: Assets/Scenes/End.unity
-    guid: 6465cfc419495d64ab12806e66212635
-  - enabled: 1
     path: Assets/Scenes/GameFinished.unity
     guid: 593ad71f4f7cd1e4ba03838eb8f7d9b4
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: 6465cfc419495d64ab12806e66212635
   m_configObjects: {}

@@ -35,11 +35,16 @@ public class Enemy : MonoBehaviour
 
     public GameObject EnemyTag;
     public GameObject health;
-    public GameObject effect;
+    public GameObject deatheffect;
+    public GameObject puncheffect;
 
     public Transform hips;
+    public Transform punchhand;
+
+    public Collider punch;
 
     Animator anim;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -48,6 +53,7 @@ public class Enemy : MonoBehaviour
         Enemycollider = GetComponent<Collider>();
         BodyColliderDeath.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        punch.enabled = false;
     }
 
 
@@ -63,10 +69,8 @@ public class Enemy : MonoBehaviour
             Enemycollider.enabled = false;
             health.SetActive(false);
             EnemyTag.SetActive(false);
-            GameObject instance= Instantiate(effect, hips.position,Quaternion.identity);
-            Destroy(instance, 2f);
-            FindObjectOfType<AudioManager>().play("Die");
             Destroy(gameObject, 2f);
+            
         }
 
         Collider[] collider = Physics.OverlapSphere(Gizmosposition.position,radius,playerlayer);
@@ -126,7 +130,21 @@ public class Enemy : MonoBehaviour
             anim.ResetTrigger("Attack");
         }
     }
-
+    IEnumerator punchattackanim()
+    {
+        punch.enabled = true;
+        yield return new WaitForSeconds(0.9f);
+        punch.enabled = false;
+    }
+    public void punchanimeffect()
+    {
+        Instantiate(puncheffect, punchhand.position, Quaternion.identity);
+    }
+    public void Deatheffect()
+    {
+        FindObjectOfType<AudioManager>().play("Die");
+        Instantiate(deatheffect, hips.position, Quaternion.identity);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(Gizmosposition.position,radius);

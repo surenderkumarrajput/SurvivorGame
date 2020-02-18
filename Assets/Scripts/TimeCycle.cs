@@ -10,7 +10,6 @@ public class TimeCycle : MonoBehaviour
     float rotation;
     float elapsedtime=0f;
     float Count=1f;
-    public Material[] materials;
     void Start()
     {
         rotation =  360/(DayTimeinmin*60);
@@ -29,14 +28,6 @@ public class TimeCycle : MonoBehaviour
             elapsedtime += Time.deltaTime;
         }
         DayCount.text = "DAY  " + Count;
-        if (elapsedtime < DayTimeinmin * 60 / 4)
-        {
-           RenderSettings.skybox  =  materials[0];
-        }
-        else
-        {
-           RenderSettings.skybox = materials[1];
-        }
         if(Count==4)
         {
             StartCoroutine(scenechange());

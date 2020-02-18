@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     private bool canrun=false;
     private bool canJump = false;
+    [HideInInspector]
     public bool Died = false;
 
     private CharacterController characterController;
@@ -30,11 +31,13 @@ public class Player : MonoBehaviour
     HealthSystem healthsystem;
     public InventoryDisplay inventoryDisplay;
 
-    Collider playercollider;
-
     public GameObject popup;
-    public GameObject effects;
+    public GameObject effects,puncheffects;
 
+    public Collider kickcollider;
+    public Collider punchcollider;
+
+    public Transform punchtransform,kicktransform;
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -46,6 +49,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         popup.SetActive(false);
+        kickcollider.enabled = false;
+        punchcollider.enabled = false;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -175,6 +180,20 @@ public class Player : MonoBehaviour
                 animator.ResetTrigger("Taunt3");
             }
         }
+    }
+    IEnumerator kickCoroutine()
+    {
+     kickcollider.enabled = true;
+     Instantiate(puncheffects, kicktransform.position, Quaternion.identity);
+     yield return new WaitForSeconds(0.8f);
+     kickcollider.enabled = false;
+    }
+    IEnumerator punchCoroutine()
+    {
+        punchcollider.enabled = true;
+        Instantiate(puncheffects, punchtransform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        punchcollider.enabled = false;
     }
     IEnumerator DeathScenechange()
     {
