@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public float AttackRadius;
     float StopFollowDistance=20f;
     float AttackingDistance = 4f;
+    float followradius = 8f;
 
     [HideInInspector]
     public bool isFollow = false;
@@ -70,7 +71,6 @@ public class Enemy : MonoBehaviour
             if(hit.gameObject.CompareTag("Player"))
             {
                 anim.SetTrigger("Entry");
-                isFollow = true;
             }
         }
 
@@ -92,13 +92,22 @@ public class Enemy : MonoBehaviour
             if (hit.gameObject.CompareTag("Player"))
             {
                 ishit = true;
+                isFollow = true;
             }
         }
         if (ishit)
         {
             anim.SetTrigger("Attack");
         }
-        if(Vector3.Distance(transform.position,temp.position)>AttackingDistance)
+        Collider[] follow = Physics.OverlapSphere(Gizmosposition.position, followradius, playerlayer);
+        foreach (var hit in follow)
+        {
+            if (hit.gameObject.CompareTag("Player"))
+            {
+                isFollow = true;
+            }
+        }
+        if (Vector3.Distance(transform.position,temp.position)>AttackingDistance)
         {
             ishit = false;
             anim.ResetTrigger("Attack");

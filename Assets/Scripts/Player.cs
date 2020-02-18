@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -25,8 +26,8 @@ public class Player : MonoBehaviour
     public Image HealthBar, hungerBar;
 
     public InventoryObject inventory;
-    public HungerSystem hunger;
-    private HealthSystem healthsystem;
+    HungerSystem hunger;
+    HealthSystem healthsystem;
     public InventoryDisplay inventoryDisplay;
 
     Collider playercollider;
@@ -99,10 +100,8 @@ public class Player : MonoBehaviour
         canJump = false;
         if(healthsystem.Health==0)
         {
-            speed = 0f;
-            animator.SetTrigger("Die");
-            transform.rotation = Quaternion.identity;
-            Died = true;
+           
+            StartCoroutine(DeathScenechange());
         }
       
         if(Died==false)
@@ -182,6 +181,14 @@ public class Player : MonoBehaviour
                 animator.ResetTrigger("Taunt3");
             }
         }
-       
+    }
+    IEnumerator DeathScenechange()
+    {
+        speed = 0f;
+        animator.SetTrigger("Die");
+        transform.rotation = Quaternion.identity;
+        Died = true;
+        yield return new WaitForSeconds(2f);
+        ChangeScene.instance.scene("End");
     }
 }
