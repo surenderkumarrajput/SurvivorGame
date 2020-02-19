@@ -1,5 +1,4 @@
-﻿using UnityEngine.EventSystems;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -26,10 +25,13 @@ public class Player : MonoBehaviour
 
     public Image HealthBar, hungerBar;
 
+    public Image energy;
+
     public InventoryObject inventory;
     HungerSystem hunger;
     HealthSystem healthsystem;
     public InventoryDisplay inventoryDisplay;
+    EnergySystem energySystem;
 
     public GameObject popup;
     public GameObject effects,puncheffects;
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         hunger = GetComponent<HungerSystem>();
         healthsystem = GetComponent<HealthSystem>();
+        energySystem = GetComponent<EnergySystem>();
     }
   
     void Start()
@@ -90,6 +93,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        energy.fillAmount = energySystem.Energy/100f;
         hunger.Hunger = Mathf.Clamp(hunger.Hunger, 0, 100);
         hungerBar.fillAmount = hunger.Hunger / 100;
         healthsystem.Health = Mathf.Clamp(healthsystem.Health, 0, 100);
@@ -141,7 +145,10 @@ public class Player : MonoBehaviour
             animator.SetBool("Jump", canJump);
             if (Input.GetMouseButtonDown(1))
             {
-                animator.SetTrigger("Kick");
+                if (energySystem.Energy == 100 || energySystem.Energy == 50)
+                {
+                    animator.SetTrigger("Kick");
+                }
             }
             else
             {
@@ -185,13 +192,13 @@ public class Player : MonoBehaviour
     {
      kickcollider.enabled = true;
      Instantiate(puncheffects, kicktransform.position, Quaternion.identity);
+     energySystem.Energy -= 50f;
      yield return new WaitForSeconds(0.8f);
      kickcollider.enabled = false;
     }
     IEnumerator punchCoroutine()
     {
         punchcollider.enabled = true;
-        Instantiate(puncheffects, punchtransform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.3f);
         punchcollider.enabled = false;
     }

@@ -20,9 +20,11 @@ public class Enemy : MonoBehaviour
 
 
     HealthSystem healthsystem;
+    EnergySystem energySystem;
     Player player;
 
     public Image healthbar;
+    public Image EnergyBar;
 
     public LayerMask playerlayer;
 
@@ -42,6 +44,7 @@ public class Enemy : MonoBehaviour
     public Transform punchhand;
 
     public Collider punch;
+    public Collider Attack2Collider;
 
     Animator anim;
 
@@ -52,6 +55,7 @@ public class Enemy : MonoBehaviour
         healthsystem = GetComponent<HealthSystem>();
         Enemycollider = GetComponent<Collider>();
         BodyColliderDeath.enabled = false;
+        energySystem = GetComponent<EnergySystem>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         punch.enabled = false;
     }
@@ -59,6 +63,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        EnergyBar.fillAmount = energySystem.Energy / 100f;
         healthbar.fillAmount = healthsystem.Health / 100;
         if (healthsystem.Health <= 0)
         {
@@ -106,7 +111,14 @@ public class Enemy : MonoBehaviour
         }
         if (ishit)
         {
-            anim.SetTrigger("Attack");
+            if(energySystem.Energy==100)
+            {
+                anim.SetTrigger("Attack2");
+            }
+            else
+            {
+                anim.SetTrigger("Attack");
+            }
         }
         Collider[] follow = Physics.OverlapSphere(Gizmosposition.position, followradius, playerlayer);
         foreach (var hit in follow)
@@ -120,6 +132,7 @@ public class Enemy : MonoBehaviour
         {
             ishit = false;
             anim.ResetTrigger("Attack");
+            anim.ResetTrigger("Attack2");
         }
         if (player.Died == true)
         {
@@ -128,6 +141,7 @@ public class Enemy : MonoBehaviour
             navmesh.isStopped = true;
             anim.SetFloat("Speed", 0f);
             anim.ResetTrigger("Attack");
+            anim.ResetTrigger("Attack2");
         }
     }
     IEnumerator punchattackanim()
@@ -136,9 +150,17 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.9f);
         punch.enabled = false;
     }
+    IEnumerator Attack2()
+    {
+        Attack2Collider.enabled = true;
+        yield return new WaitForSeconds(0.4f);
+        Attack2Collider.enabled = false;
+    }
     public void punchanimeffect()
     {
         Instantiate(puncheffect, punchhand.position, Quaternion.identity);
+        energySystem.Energy -= 100;
+        FindObjectOfType<AudioManager>().play("AttackEffect");
     }
     public void Deatheffect()
     {
