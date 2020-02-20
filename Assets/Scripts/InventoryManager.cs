@@ -6,14 +6,17 @@ using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
+    [HideInInspector]
     public static InventoryManager instance;
+    [HideInInspector]
     public Itemobject item;
     public RawImage RenderingImage;
     public bool selected=false;
     public TextMeshProUGUI description,Itemname;
-    public GameObject InfoButton,Usebutton,deleteButton;
+    public GameObject InfoButton,Usebutton,deleteButton,useeffect;
     public Player player;
     public InventoryDisplay InventoryDisplay;
+    public Transform playertransform;
     void Start()
     {
         description.text = "";
@@ -61,6 +64,7 @@ public class InventoryManager : MonoBehaviour
         if(selected==true)
         {
             item.Use(item);
+            StartCoroutine(playUsesound());
             selected = false;
         }
     }
@@ -72,5 +76,11 @@ public class InventoryManager : MonoBehaviour
             InventoryDisplay.RemoveItem(item);
             selected = false;
         }
+    }
+    IEnumerator playUsesound()
+    {
+        FindObjectOfType<AudioManager>().play("Use");
+        yield return new WaitForSeconds(0.6f);
+        Instantiate(useeffect, playertransform.position, Quaternion.identity);
     }
 }

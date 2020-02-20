@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     public Collider kickcollider;
     public Collider punchcollider;
 
-    public Transform punchtransform,kicktransform;
+    public Transform punchtransform,kicktransform,hips;
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -106,7 +106,6 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(DeathScenechange());
         }
-      
         if(Died==false)
         {
             transform.Rotate(new Vector3(0, Input.GetAxisRaw("Mouse X") * rotationSpeed * Time.deltaTime, 0));
@@ -145,7 +144,7 @@ public class Player : MonoBehaviour
             animator.SetBool("Jump", canJump);
             if (Input.GetMouseButtonDown(1))
             {
-                if (energySystem.Energy == 100 || energySystem.Energy == 50)
+                if (energySystem.Energy %50==0)
                 {
                     animator.SetTrigger("Kick");
                 }
@@ -209,6 +208,6 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.identity;
         Died = true;
         yield return new WaitForSeconds(2f);
-        ChangeScene.instance.scene("End");
+        ChangeScene.instance.SceneChangeTranstion("End");
     }
 }

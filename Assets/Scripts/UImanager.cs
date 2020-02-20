@@ -33,10 +33,12 @@ public class UImanager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             Inventorytab.SetActive(true);
+            FindObjectOfType<AudioManager>().play("Inventory");
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
             Inventorytab.SetActive(false);
+            FindObjectOfType<AudioManager>().play("Inventory");
         }
     }
     public void PopupDisplay(GameObject pop)

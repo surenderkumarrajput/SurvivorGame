@@ -5,7 +5,6 @@ using UnityEngine;
 public class InventoryObject : ScriptableObject
 {
     public delegate void onitemchanged();
-
     public onitemchanged onitemchangedcallback;
     public List<InventorySlot> Container = new List<InventorySlot>();
     public void AddItem(Itemobject _item,int _amount)

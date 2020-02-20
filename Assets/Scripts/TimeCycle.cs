@@ -36,7 +36,7 @@ public class TimeCycle : MonoBehaviour
     IEnumerator scenechange()
     {
         yield return new WaitForSeconds(1f);
-        ChangeScene.instance.scene("GameFinished");
+        ChangeScene.instance.SceneChangeTranstion("GameFinished");
     }
 }
    

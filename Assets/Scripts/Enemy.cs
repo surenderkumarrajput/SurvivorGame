@@ -31,8 +31,6 @@ public class Enemy : MonoBehaviour
     Collider Enemycollider;
     public Collider BodyColliderDeath;
 
-    public Transform Gizmosposition;
-
     NavMeshAgent navmesh;
 
     public GameObject EnemyTag;
@@ -41,7 +39,9 @@ public class Enemy : MonoBehaviour
     public GameObject puncheffect;
 
     public Transform hips;
-    public Transform punchhand;
+    public Transform AttackPart;
+    public Transform Gizmosposition;
+
 
     public Collider punch;
     public Collider Attack2Collider;
@@ -158,7 +158,7 @@ public class Enemy : MonoBehaviour
     }
     public void punchanimeffect()
     {
-        Instantiate(puncheffect, punchhand.position, Quaternion.identity);
+        Instantiate(puncheffect, AttackPart.position, Quaternion.identity);
         energySystem.Energy -= 100;
         FindObjectOfType<AudioManager>().play("AttackEffect");
     }

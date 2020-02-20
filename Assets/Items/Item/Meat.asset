@@ -21,7 +21,10 @@ MonoBehaviour:
   renderImage: {fileID: 5745038672170413140, guid: b167d28761973bd49ab0d7c597a64c81,
     type: 3}
   type: 0
-  Weight: 20
+  Weight: 90
   inventory: {fileID: 11400000, guid: ef0f266d81776274dbdce9b4da91e13a, type: 2}
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   Healthincrease: 15
   hungerDecrease: 0

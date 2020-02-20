@@ -46,19 +46,43 @@ MonoBehaviour:
   audioarray:
   - audiosource: {fileID: 0}
     name: Theme
-    volume: 0
+    volume: 1
     pitch: 1
     isloop: 1
     audio: {fileID: 8300000, guid: 89daf0812e1489e4ca738c7a84faac60, type: 3}
   - audiosource: {fileID: 0}
     name: Attack
-    volume: 0
+    volume: 1
     pitch: 1
     isloop: 0
-    audio: {fileID: 8300000, guid: f1d3de7c0c4674b4e835c2ee2a3502f4, type: 3}
+    audio: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
   - audiosource: {fileID: 0}
     name: Die
     volume: 1
     pitch: 1
     isloop: 0
     audio: {fileID: 8300000, guid: b8cfb0c985a063046a96a33abf621683, type: 3}
+  - audiosource: {fileID: 0}
+    name: AttackEffect
+    volume: 1
+    pitch: 1
+    isloop: 0
+    audio: {fileID: 8300000, guid: 7f4aa26d5b55226409cda231ffaf869b, type: 3}
+  - audiosource: {fileID: 0}
+    name: Use
+    volume: 1
+    pitch: 1
+    isloop: 0
+    audio: {fileID: 8300000, guid: adcac75087a17704ca6c0c3b15bc3aa5, type: 3}
+  - audiosource: {fileID: 0}
+    name: Inventory
+    volume: 1
+    pitch: 1
+    isloop: 0
+    audio: {fileID: 8300000, guid: d25232d97769c6842af07fd5fff73533, type: 3}
+  - audiosource: {fileID: 0}
+    name: Narrator
+    volume: 1
+    pitch: 1
+    isloop: 0
+    audio: {fileID: 8300000, guid: 687d43c4a1ad5244682be34d4dc991b0, type: 3}
