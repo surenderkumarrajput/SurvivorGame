@@ -25,6 +25,6 @@ public class ChangeScene : MonoBehaviour
     {
         anim.SetTrigger("End");
         yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene(scenename);
+        SceneManager.LoadSceneAsync(scenename);
     }
 }

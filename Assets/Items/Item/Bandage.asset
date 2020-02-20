@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef35c4f677d5714bbb9449df377c4e0, type: 3}
+  m_Name: Bandage
+  m_EditorClassIdentifier: 
+  Itemname: Bandage
+  Description: Bandage,increases player health by 50..
+  ItemPrefabImage: {fileID: 2955255885130084521, guid: 3d088cb56f677134199c80b9d91a74db,
+    type: 3}
+  ItemGameobject: {fileID: 7746773310449080756, guid: bb5869f405056454396e000994c9a9d3,
+    type: 3}
+  renderImage: {fileID: 2069896026664500978, guid: ddea5e88fdfb1bc4987b723757dc7def,
+    type: 3}
+  type: 0
+  Weight: 25
+  inventory: {fileID: 11400000, guid: ef0f266d81776274dbdce9b4da91e13a, type: 2}
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  Healthincrease: 50
+  hungerDecrease: 0

@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
 
     NavMeshAgent navmesh;
 
-    public GameObject EnemyTag;
     public GameObject health;
     public GameObject deatheffect;
     public GameObject puncheffect;
@@ -73,7 +72,6 @@ public class Enemy : MonoBehaviour
             navmesh.isStopped=true;
             Enemycollider.enabled = false;
             health.SetActive(false);
-            EnemyTag.SetActive(false);
             Destroy(gameObject, 2f);
             
         }
