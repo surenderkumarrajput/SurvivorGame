@@ -4,6 +4,7 @@ public class UImanager : MonoBehaviour
 {
     public GameObject Inventorytab;
     public GameObject[] obj;
+    public GameObject pausemenu;
     int i;
     void Start()
     {
@@ -29,7 +30,7 @@ public class UImanager : MonoBehaviour
     }
     void Update()
     {
-      
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             Inventorytab.SetActive(true);
@@ -40,6 +41,35 @@ public class UImanager : MonoBehaviour
             Inventorytab.SetActive(false);
             FindObjectOfType<AudioManager>().play("Inventory");
         }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            bool active = pausemenu.activeSelf;
+            if(active)
+            {
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                Time.timeScale = 0f;
+            }
+            pausemenu.SetActive(!active);
+        }
+    }   
+    public void resume()
+    {
+        Time.timeScale = 1f;
+        pausemenu.SetActive(false);
+    }
+    public void Mainmenu()
+    {
+        Time.timeScale = 1f;
+        pausemenu.SetActive(false);
+        ChangeScene.instance.SceneChangeTranstion("Main");
+    }
+    public void quit()
+    {
+        Time.timeScale = 1f;
+        Application.Quit();
     }
     public void PopupDisplay(GameObject pop)
     {
