@@ -42,6 +42,7 @@ public class InventoryManager : MonoBehaviour
             Usebutton.SetActive(false);
             deleteButton.SetActive(false);
         }
+       
     }
     public void Show()
     {

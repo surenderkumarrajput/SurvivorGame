@@ -59,15 +59,18 @@ public class Player : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
      {
          var obj = hit.gameObject.GetComponent<Item>();
-             if(obj)
-             {
-                 inventoryDisplay.PopupFunction(popup);
-                 if (Input.GetKeyDown(KeyCode.E))
-                 {
-                     inventory.AddItem(obj.item, 1);
-                     Destroy(obj.gameObject);
-                 }
-             }
+        if (obj)
+        {
+            if (inventory.ispickable)
+            {
+                inventoryDisplay.PopupFunction(popup);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    inventory.AddItem(obj.item, 1);
+                    Destroy(obj.gameObject);
+                }
+            }
+           }
          else if(!obj)
          {
             inventoryDisplay.popclosefunction(popup);

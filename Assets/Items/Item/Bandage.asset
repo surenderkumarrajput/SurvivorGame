@@ -21,7 +21,7 @@ MonoBehaviour:
   renderImage: {fileID: 2069896026664500978, guid: ddea5e88fdfb1bc4987b723757dc7def,
     type: 3}
   type: 0
-  Weight: 25
+  Weight: 20
   inventory: {fileID: 11400000, guid: ef0f266d81776274dbdce9b4da91e13a, type: 2}
   layer:
     serializedVersion: 2

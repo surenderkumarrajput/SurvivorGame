@@ -6,23 +6,31 @@ public class InventoryObject : ScriptableObject
 {
     public delegate void onitemchanged();
     public onitemchanged onitemchangedcallback;
+    public float inventoryweight;
+    public float weight=0f;
+    public bool ispickable;
     public List<InventorySlot> Container = new List<InventorySlot>();
     public void AddItem(Itemobject _item,int _amount)
     {
         bool hasItem = false;
-        for (int i = 0; i < Container.Count; i++)
+        if (ispickable)
         {
-            if(Container[i].item==_item)
+            for (int i = 0; i < Container.Count; i++)
             {
-                Container[i].AddAmount(_amount);
-                hasItem = true;
-                break; 
+                if (Container[i].item == _item)
+                {
+                    Container[i].AddAmount(_amount);
+                    hasItem = true;
+                    break;
+                }
             }
+            if (!hasItem)
+            {
+                Container.Add(new InventorySlot(_item, _amount));
+            }
+            weight += _item.Weight;
         }
-        if (!hasItem)
-        {
-            Container.Add(new InventorySlot(_item, _amount));
-        }
+
     }
 }
 
@@ -31,6 +39,7 @@ public class InventorySlot
 {
     public Itemobject item;
     public int amount;
+    public float weight;
     public InventorySlot(Itemobject _item,int _amount)
     {
         item = _item;

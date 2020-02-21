@@ -5,6 +5,8 @@ public class UImanager : MonoBehaviour
     public GameObject Inventorytab;
     public GameObject[] obj;
     public GameObject pausemenu;
+    public InventoryObject inventory;
+
     int i;
     void Start()
     {
@@ -53,6 +55,18 @@ public class UImanager : MonoBehaviour
                 Time.timeScale = 0f;
             }
             pausemenu.SetActive(!active);
+        }
+        if (inventory.Container.Count == 0)
+        {
+            inventory.weight = 0f;
+        }
+        if (inventory.weight < inventory.inventoryweight)
+        {
+            inventory.ispickable = true;
+        }
+        else if (inventory.weight == inventory.inventoryweight || inventory.weight > inventory.inventoryweight)
+        {
+            inventory.ispickable = false;
         }
     }   
     public void resume()

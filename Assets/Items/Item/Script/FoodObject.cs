@@ -24,6 +24,7 @@ public class FoodObject : Itemobject
             {
                 return;
             }
+            inventory.weight -= _item.Weight;
         }
     }
 }

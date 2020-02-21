@@ -6,6 +6,7 @@ using TMPro;
 public class InventoryDisplay : MonoBehaviour
 {
     public GameObject player;
+    public TextMeshProUGUI Weight;
     public InventoryObject inventory;
     public Dictionary<InventorySlot, GameObject> DisplayedItem = new Dictionary<InventorySlot, GameObject>();
     
@@ -14,7 +15,7 @@ public class InventoryDisplay : MonoBehaviour
         CreateDisplay();
         inventory.onitemchangedcallback+=UpdateDisplay;
     }
-   
+    
     private void Update()
     {
         UpdateDisplay();
@@ -44,6 +45,7 @@ public class InventoryDisplay : MonoBehaviour
                 }
             }
         }
+        inventory.weight -= _item.Weight;
     }
     public void CreateDisplay()
     {
@@ -63,6 +65,8 @@ public class InventoryDisplay : MonoBehaviour
     }
     public void UpdateDisplay()
     {
+        Weight.text = "Weight - "+inventory.weight.ToString()+" / "+inventory.inventoryweight;
+        
         for (int i = 0; i < inventory.Container.Count; i++)
         {
             if (DisplayedItem.ContainsKey(inventory.Container[i]))

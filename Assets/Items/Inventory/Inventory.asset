@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ec4cdf88d8a1543a0fbbc5a5d3f6c0, type: 3}
   m_Name: Inventory
   m_EditorClassIdentifier: 
+  inventoryweight: 100
+  weight: 0
+  ispickable: 1
   Container: []

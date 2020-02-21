@@ -23,5 +23,8 @@ MonoBehaviour:
   type: 0
   Weight: 10
   inventory: {fileID: 11400000, guid: ef0f266d81776274dbdce9b4da91e13a, type: 2}
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   Healthincrease: 10
   hungerDecrease: 0
