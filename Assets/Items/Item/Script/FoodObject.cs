@@ -9,7 +9,7 @@ public class FoodObject : Itemobject
     public override void Use(Itemobject _item)
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<HealthSystem>().Health += Healthincrease;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<HungerSystem>().Hunger = hungerDecrease;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<HungerSystem>().Hunger -= hungerDecrease;
         for (int i = 0; i < inventory.Container.Count; i++)
         {
             if (inventory.Container[i].item.type == _item.type)
