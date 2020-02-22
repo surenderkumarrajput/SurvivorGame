@@ -24,7 +24,8 @@ public class FoodObject : Itemobject
             {
                 return;
             }
-            inventory.weight -= _item.Weight;
         }
+        inventory.weight -= _item.Weight;
+        inventory.weight = Mathf.Clamp(inventory.weight,0,inventory.inventoryweight);
     }
 }

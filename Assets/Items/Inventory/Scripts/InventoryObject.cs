@@ -13,8 +13,6 @@ public class InventoryObject : ScriptableObject
     public void AddItem(Itemobject _item,int _amount)
     {
         bool hasItem = false;
-        if (ispickable)
-        {
             for (int i = 0; i < Container.Count; i++)
             {
                 if (Container[i].item == _item)
@@ -29,8 +27,7 @@ public class InventoryObject : ScriptableObject
                 Container.Add(new InventorySlot(_item, _amount));
             }
             weight += _item.Weight;
-        }
-
+            weight=Mathf.Clamp(weight, 0, inventoryweight);
     }
 }
 

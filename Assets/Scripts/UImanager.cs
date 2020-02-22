@@ -60,14 +60,6 @@ public class UImanager : MonoBehaviour
         {
             inventory.weight = 0f;
         }
-        if (inventory.weight < inventory.inventoryweight)
-        {
-            inventory.ispickable = true;
-        }
-        else if (inventory.weight == inventory.inventoryweight || inventory.weight > inventory.inventoryweight)
-        {
-            inventory.ispickable = false;
-        }
     }   
     public void resume()
     {

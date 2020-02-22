@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
 
     public GameObject popup;
     public GameObject effects,puncheffects;
+    public GameObject inventoryfull;
 
     public Collider kickcollider;
     public Collider punchcollider;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
         popup.SetActive(false);
         kickcollider.enabled = false;
         punchcollider.enabled = false;
+        inventoryfull.SetActive(false);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -61,21 +63,27 @@ public class Player : MonoBehaviour
          var obj = hit.gameObject.GetComponent<Item>();
         if (obj)
         {
-            if (inventory.ispickable)
+            if ((obj.item.Weight+inventory.weight)<inventory.inventoryweight|| (obj.item.Weight + inventory.weight) == inventory.inventoryweight)
             {
                 inventoryDisplay.PopupFunction(popup);
+                inventoryfull.SetActive(false);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     inventory.AddItem(obj.item, 1);
                     Destroy(obj.gameObject);
                 }
             }
-           }
+            else
+            {
+                inventoryfull.SetActive(true);
+            }
+        }
          else if(!obj)
          {
             inventoryDisplay.popclosefunction(popup);
-         }
-     }
+            inventoryfull.SetActive(false);
+        }
+    }
     private void OnApplicationQuit()
     {
         inventory.Container.Clear();
