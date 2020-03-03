@@ -6,7 +6,7 @@ public class HungerSystem : MonoBehaviour
 {
     public float Hunger=0;
     public float HungerIncreaseFactor=10;
-    private float ElapsedTime = 0f, FixedTime = 3600f;
+    private float ElapsedTime = 0f, FixedTime = 8f;
     public float Player_Hunger(float health)
     {
         Hunger = Mathf.Clamp(Hunger, 0, 100);
@@ -14,9 +14,9 @@ public class HungerSystem : MonoBehaviour
         {
             Hunger += HungerIncreaseFactor;
             ElapsedTime = 0f;
-            if (Hunger >= 20f)
+            if (Hunger >= 40f)
             {
-                health -= 10f;
+                health -= 20f;
             }
         }
         else

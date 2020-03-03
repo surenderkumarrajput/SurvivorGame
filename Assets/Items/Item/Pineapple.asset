@@ -27,4 +27,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   Healthincrease: 10
-  hungerDecrease: 0
+  hungerDecrease: 15
